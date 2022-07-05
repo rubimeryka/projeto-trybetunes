@@ -1,5 +1,8 @@
 import React from 'react';
 import Header from './Header';
+import searchAlbumsAPIs from '../services/searchAlbumsAPI';
+import AlbumCard from '../components/AlbumCard';
+import Loading from './Loading';
 
 class Search extends React.Component {
   constructor() {
@@ -8,6 +11,9 @@ class Search extends React.Component {
     this.state = {
       isButtonDisabled: true,
       searchInput: '',
+      albuns: [],
+      loading: false,
+      busca: '',
     };
   }
 
@@ -28,8 +34,15 @@ class Search extends React.Component {
       }
     };
 
+    handleSearch = async () => {
+      const { searchInput } = this.state;
+      this.setState({ loading: true, busca: searchInput });
+      const albuns = await searchAlbumsAPIs(searchInput);
+      this.setState({ albuns, searchInput: '', loading: false });
+    }
+
     render() {
-      const { searchInput, isButtonDisabled } = this.state;
+      const { searchInput, isButtonDisabled, albuns, loading, busca } = this.state;
       return (
         <div data-testid="page-search">
           <Header />
@@ -45,11 +58,23 @@ class Search extends React.Component {
             type="submit"
             data-testid="search-artist-button"
             disabled={ isButtonDisabled }
-            onClick={ this.handleInput }
+            onClick={ this.handleSearch }
           >
             Pesquisar
-
           </button>
+          { albuns.length < 1
+          && <h5>Nenhum álbum foi encontrado</h5>}
+          { loading
+            ? <Loading />
+            : (
+              <div>
+                <h1>{`Resultado de álbuns de: ${busca}`}</h1>
+                (
+                { albuns.map((album) => (
+                  <AlbumCard collection={ album } key={ album.collectionId } />
+                ))}
+                )
+              </div>)}
         </div>
       );
     }

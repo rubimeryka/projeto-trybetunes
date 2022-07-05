@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Album from './pages/Album';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
@@ -11,7 +11,7 @@ import Search from './pages/Search';
 class App extends React.Component {
   render() {
     return (
-      <>
+      <BrowserRouter>
         <p>TrybeTunes</p>
         <Switch>
           <Route path="/search" component={ Search } />
@@ -23,7 +23,7 @@ class App extends React.Component {
           <Route path="*" component={ NotFound } />
         </Switch>
 
-      </>
+      </BrowserRouter>
     );
   }
 }

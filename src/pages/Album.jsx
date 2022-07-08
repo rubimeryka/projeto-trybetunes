@@ -26,10 +26,6 @@ class Album extends React.Component {
     this.setState({ albumName, albumSongs });
   }
 
-  // favoriteSongsList = async () => {
-
-  // }
-
   render() {
     const { albumName, albumSongs } = this.state;
     return (
@@ -45,7 +41,6 @@ class Album extends React.Component {
         />))}
         Album
       </div>
-
     );
   }
 }

@@ -26,6 +26,10 @@ class Album extends React.Component {
     this.setState({ albumName, albumSongs });
   }
 
+  // favoriteSongsList = async () => {
+
+  // }
+
   render() {
     const { albumName, albumSongs } = this.state;
     return (
@@ -33,7 +37,12 @@ class Album extends React.Component {
         <Header />
         <h1 data-testid="artist-name">{albumName.artistName}</h1>
         <h1 data-testid="album-name">{albumName.collectionName}</h1>
-        {albumSongs.map((song) => <MusicCard song={ song } key={ song.trackId } />)}
+        {albumSongs.map((song) => (<MusicCard
+          song={ song }
+          key={ song.trackId }
+          // previewUrl={ song.previewUrl }
+          trackId={ song.trackId }
+        />))}
         Album
       </div>
 
